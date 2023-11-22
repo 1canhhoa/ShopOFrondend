@@ -33,97 +33,98 @@ function App() {
       dispatch(ActionGetAllCart(user?.email))
     }
   }, [dispatch, user])
-  console.log('1');
 
   return (
     <>
-      {loading ? <LoaderBig /> :
-        <BrowserRouter>
-          <Routes>
-            {publicRoutes.map((route, index) => {
-              let Layout = DefaultLayout
-              let Component1 = route.component1
-              if (route.layout) {
-                Layout = route.layout
-              } else if (route.layout === null) {
-                Layout = Fragment
-              }
-              let Page = route.component
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
+      {/* {loading ?
+        <LoaderBig />
+        : */}
+      <BrowserRouter>
+        <Routes>
+          {publicRoutes.map((route, index) => {
+            let Layout = DefaultLayout
+            let Component1 = route.component1
+            if (route.layout) {
+              Layout = route.layout
+            } else if (route.layout === null) {
+              Layout = Fragment
+            }
+            let Page = route.component
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <Layout>
+                    <Page />
+                    {Component1 && user && <Component1 />}
+                  </Layout>
+                }
+              />
+            )
+          })}
+          {privateRoutes.map((route, index) => {
+            let Layout = DefaultLayout
+            if (route.layout) {
+              Layout = route.layout
+            } else if (route.layout === null) {
+              Layout = Fragment
+            }
+            let Page = route.component
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+
+                  <ProtectedRouts>
                     <Layout>
                       <Page />
-                      {Component1 && user && <Component1 />}
+                      <ChatClient />
                     </Layout>
-                  }
-                />
-              )
-            })}
-            {privateRoutes.map((route, index) => {
-              let Layout = DefaultLayout
-              if (route.layout) {
-                Layout = route.layout
-              } else if (route.layout === null) {
-                Layout = Fragment
-              }
-              let Page = route.component
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
+                  </ProtectedRouts>
+                }
+              />
+            )
+          })}
+          {privateRoutesShop.map((route, index) => {
+            let Layout = DefaultLayout
+            if (route.layout) {
+              Layout = route.layout
+            } else if (route.layout === null) {
+              Layout = Fragment
+            }
+            let Page = route.component
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <ProtectedRoutsShop>
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  </ProtectedRoutsShop>
+                }
+              />
+            )
+          })}
+        </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
 
-                    <ProtectedRouts>
-                      <Layout>
-                        <Page />
-                        <ChatClient />
-                      </Layout>
-                    </ProtectedRouts>
-                  }
-                />
-              )
-            })}
-            {privateRoutesShop.map((route, index) => {
-              let Layout = DefaultLayout
-              if (route.layout) {
-                Layout = route.layout
-              } else if (route.layout === null) {
-                Layout = Fragment
-              }
-              let Page = route.component
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
-                    <ProtectedRoutsShop>
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    </ProtectedRoutsShop>
-                  }
-                />
-              )
-            })}
-          </Routes>
-          <ToastContainer
-            position="top-right"
-            autoClose={500}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-
-        </BrowserRouter>
-      }
+      </BrowserRouter>
+      {/* // } */}
     </>
 
   )
